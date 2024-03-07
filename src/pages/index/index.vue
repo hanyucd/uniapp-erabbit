@@ -12,16 +12,33 @@
   <uni-badge text="2" type="success" />
   <uni-badge text="3" type="primary" :inverted="true" />
 
-  <uni-countdown :day="1" :hour="1" :minute="12" :second="40" />
+  <uni-fav :checked="false" @click="onClick" />
 </template>
 
 <script setup lang="ts">
+// import '@/api/httpRequest';
+import httpRequest from '@/api/httpRequest';
+
 import { ref } from 'vue';
 const title = ref('uniapp');
 
 
 uni.$emit('e', { name: 'hanu' });
 // getCurrentPages();
+
+
+const onClick = async () => {
+  console.log('fff');
+  // uni.request({
+  //   method: 'GET',
+  //   url: '/home/banner'
+  // });
+
+  const res = await httpRequest('/home/banner');
+
+  console.log(res);
+};
+
 </script>
 
 <style lang="scss">

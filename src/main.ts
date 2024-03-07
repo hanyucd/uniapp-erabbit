@@ -13,3 +13,5 @@ export function createApp() {
     app,
   };
 }
+
+// console.log('当前环境：', import.meta.env);
