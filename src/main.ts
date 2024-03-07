@@ -8,6 +8,8 @@ export function createApp() {
 
   // 使用 pinia
   app.use(pinia);
+  // app.config.globalProperties.msg = 'hello';
+  // console.log('全局：', app.config.globalProperties);
 
   return {
     app,
@@ -15,3 +17,4 @@ export function createApp() {
 }
 
 // console.log('当前环境：', import.meta.env);
+
