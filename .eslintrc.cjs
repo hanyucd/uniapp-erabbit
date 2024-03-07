@@ -1,10 +1,15 @@
 module.exports = {
-  root: true,
+  // 环境定义了预定义的全局变量
   env: {
     browser: true,
     node: true
   },
-  globals: {},
+  // 指定全局变量
+  globals: {
+    uni: true,
+    wx: true,
+    getCurrentPages: true,
+  },
   // 指定如何解析语法
   parser: 'vue-eslint-parser',
   // 优先级低于 parse 的语法解析配置
@@ -28,6 +33,8 @@ module.exports = {
     '@typescript-eslint/semi': 'error',
     'quotes': 'off',
     '@typescript-eslint/quotes': ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
 
     'vue/multi-word-component-names': 'off', // 关闭 组件名称始终是多个单词
     // 控制一/多行可接受的属性量
