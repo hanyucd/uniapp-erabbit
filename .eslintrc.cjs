@@ -4,10 +4,12 @@ module.exports = {
     browser: true,
     node: true
   },
-  // 指定全局变量
+  // 指定全局变量，可以在代码中直接使用而不需要声明
   globals: {
     uni: true,
     wx: true,
+    UniApp: true,
+    UniHelper: true,
     getCurrentPages: true,
   },
   // 指定如何解析语法
@@ -35,6 +37,15 @@ module.exports = {
     '@typescript-eslint/quotes': ['error', 'single', { allowTemplateLiterals: true }], // 强制使用单引号 & 允许字符串使用反勾号
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
+    // 接口和类型别名中的成员之间分隔符
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
+      {
+        'multiline': { 'delimiter': 'semi', 'requireLast': true },
+        'singleline': { 'delimiter': 'semi', 'requireLast': false },
+        'multilineDetection': 'brackets'
+      }
+    ],
 
     'vue/multi-word-component-names': 'off', // 关闭 组件名称始终是多个单词
     // 控制一/多行可接受的属性量

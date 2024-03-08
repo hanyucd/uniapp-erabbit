@@ -16,9 +16,6 @@
 </template>
 
 <script setup lang="ts">
-// import '@/api/httpRequest';
-import httpRequest from '@/api/httpRequest';
-
 import { ref } from 'vue';
 const title = ref('uniapp');
 
@@ -32,11 +29,7 @@ const onClick = async () => {
   // uni.request({
   //   method: 'GET',
   //   url: '/home/banner'
-  // });
-
-  const res = await httpRequest('/home/banner');
-
-  console.log(res);
+  // })
 };
 
 </script>

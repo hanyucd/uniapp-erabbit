@@ -17,7 +17,7 @@ const httpInterceptor: UniApp.InterceptorOptions = {
       'source-client': 'miniapp',
     };
     
-    console.log(options);
+    // console.log(options);
   }
 };
 
@@ -26,8 +26,8 @@ uni.addInterceptor('uploadFile', httpInterceptor);
 
 interface IResponse<T> {
   code: string;
-  msg: string
-  result: T
+  msg: string;
+  result: T;
 }
 
 // 请求方法
@@ -42,7 +42,7 @@ const httpRequest = <T = any>(url = '', data = {}, method: string = 'get', other
       ...otherConfig,
       // 响应成功
       success(res) {
-        console.log(res);
+        // console.log(res);
         // 状态码 2xx， axios 就是这样设计的
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(res.data as IResponse<T>);
@@ -61,7 +61,7 @@ const httpRequest = <T = any>(url = '', data = {}, method: string = 'get', other
       },
       // 响应失败
       fail(error) {
-        uni.showToast({ icon: 'none', title: '网络错误，换个网络试试', });
+        uni.showToast({ icon: 'none', title: '网络错误，换个网络试试' });
         reject(error);
       }
     });

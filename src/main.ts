@@ -1,6 +1,7 @@
 import { createSSRApp } from 'vue';
 import App from './App.vue';
-import pinia from './stores';
+import pinia from '@/stores';
+import api from '@/api';
 
 export function createApp() {
   // 创建 vue 实例
@@ -8,8 +9,8 @@ export function createApp() {
 
   // 使用 pinia
   app.use(pinia);
-  // app.config.globalProperties.msg = 'hello';
-  // console.log('全局：', app.config.globalProperties);
+  // app.config.globalProperties.$api = api;
+  app.provide('$api', api);
 
   return {
     app,

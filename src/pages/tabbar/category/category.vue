@@ -5,7 +5,11 @@
 </template>
 
 <script setup lang="ts">
+import { onLoad, onShow } from '@dcloudio/uni-app';
 
+onLoad(() => {
+  console.log('加载 onLoad');
+});
 </script>
 
 <style lang="scss" scoped>

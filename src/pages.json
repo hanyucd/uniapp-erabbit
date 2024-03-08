@@ -73,12 +73,12 @@
 				"navigationBarTitleText": "我的"
 			}
 		}
-	],
-	// 分包加载
-	"subPackages": [
-		{
-			"root": "",
-			"pages": []
-		}
 	]
+	// 分包加载
+	// "subPackages": [
+	// 	{
+	// 		"root": "",
+	// 		"pages": []
+	// 	}
+	// ]
 }

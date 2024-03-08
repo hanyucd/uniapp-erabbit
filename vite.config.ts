@@ -1,11 +1,19 @@
-import { defineConfig } from "vite";
-import uni from "@dcloudio/vite-plugin-uni";
+import { defineConfig } from 'vite';
+import uni from '@dcloudio/vite-plugin-uni';
+import eslintPlugin from 'vite-plugin-eslint';
+import Components from 'unplugin-vue-components/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [uni()],
   server: {
     port: 8080,
     host: true,
   },
+  plugins: [
+    eslintPlugin(),
+    Components({
+      dts: 'src/components.d.ts', // generate `components.d.ts` global declarations
+    }),
+    uni(),
+  ],
 });
