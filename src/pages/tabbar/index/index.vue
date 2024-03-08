@@ -3,41 +3,46 @@
     <NavBar />
 
     <DefSwiper :list="bannerList" />
+    <CategoryPanel :list="categoryList" />
   </view>
 </template>
 
 <script setup lang="ts">
-import { onLoad, onShow } from '@dcloudio/uni-app';
-import { ref, inject, onMounted } from 'vue';
 import NavBar from './components/NavBar/NavBar.vue';
+import CategoryPanel from './components/CategoryPanel/CategoryPanel.vue';
+import { onLoad } from '@dcloudio/uni-app';
+import { ref, inject } from 'vue';
 import type { ApiType } from '@/types/api';
-import type { BannerItem } from '@/types/home';
+import type { BannerItem, CategoryItem } from '@/types/home';
 
 const $api = inject('$api') as ApiType;
 
 // 轮播图
 const bannerList = ref<BannerItem[]>([]);
+// 获取前台分类数据
+const categoryList = ref<CategoryItem[]>([]);
 
-onLoad(() => {
+onLoad(async () => {
   console.log('加载 onLoad');
 
-  getHomeBannerData();
-});
+  await Promise.all([_getHomeBannerData(), _getHomeCategoryData()]);
 
-onShow(() => {
-  console.log('index Show');
 });
-
-// onMounted(() => {
-//   console.log('index mounted');
-// });
 
 /**
  * 加载 banner
  */
-const getHomeBannerData = async () => {
+const _getHomeBannerData = async () => {
   const { result: bannerResult } = await $api.getBannerApi({ distributionSite: 1 });
   bannerList.value = bannerResult;
+};
+
+/**
+ * 加载 分类
+ */
+const _getHomeCategoryData = async () => {
+  const { result: categoryData } = await $api.getHomeCategoryBannerApi();
+  categoryList.value = categoryData;
 };
 </script>
 
