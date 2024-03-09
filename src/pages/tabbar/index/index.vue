@@ -7,7 +7,9 @@
       refresher-enabled
       class="scroll-view"
       scroll-y
+      :refresher-triggered="isTriggered"
       @scrolltolower="onScrolltolowerEvt"
+      @refresherrefresh="onRefresherrefreshEvt"
     >
       <!-- 轮播图 -->
       <DefSwiper :list="bannerList" />
@@ -68,6 +70,25 @@ const _getHomeCategoryData = async () => {
 const _getHomeHotData = async () => {
   const { result: hotData } = await $api.getHomeHotApi();
   hotList.value = hotData;
+};
+
+// 当前下拉刷新状态
+const isTriggered = ref(false);
+
+// scroll-view 下拉刷新被触发
+const onRefresherrefreshEvt = async () => {
+  // 开始动画
+  isTriggered.value = true;
+  guessLikeRef.value?.resetGuessLikeData();
+
+  await Promise.all([
+    _getHomeBannerData(),
+    _getHomeCategoryData(),
+    _getHomeHotData(),
+    guessLikeRef.value?.getMoreGuessLike()
+  ]);
+
+  isTriggered.value = false;
 };
 </script>
 

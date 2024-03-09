@@ -65,8 +65,16 @@ const _getHomeGoodsGuessLikeData = async () => {
   }
 };
 
+// 重置数据
+const resetData = () => {
+  pageParams.page = 1;
+  guessList.value = [];
+  finish.value = false;
+};
+
 defineExpose({
-  getMoreGuessLike: _getHomeGoodsGuessLikeData
+  getMoreGuessLike: _getHomeGoodsGuessLikeData,
+  resetGuessLikeData: resetData
 });
 </script>
 

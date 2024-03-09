@@ -16,13 +16,27 @@
 </template>
 
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 const title = ref('uniapp');
 
 
-uni.$emit('e', { name: 'hanu' });
-// getCurrentPages();
+// setup 语法获取页面参数方式 之一
+const query = defineProps<{
+  type: string;
+}>();
 
+// 热门推荐页 标题和url
+const urlMap = [
+  { type: '1', title: '特惠推荐', url: '/hot/preference' },
+  { type: '2', title: '爆款推荐', url: '/hot/inVogue' },
+  { type: '3', title: '一站买全', url: '/hot/oneStop' },
+  { type: '4', title: '新鲜好物', url: '/hot/new' },
+];
+
+const currUrlMap = urlMap.find((v) => v.type === query.type);
+// 动态设置标题
+uni.setNavigationBarTitle<UniApp.SetNavigationBarTitleOptions>({ title: currUrlMap?.title || '' });
 
 const onClick = async () => {
   console.log('fff');
