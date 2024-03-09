@@ -1,25 +1,19 @@
 <template>
-  <view class="content">
-    <image lass="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title">
-        {{ title }}
-      </text>
+  <view class="viewport">
+    <!-- 推荐封面图 -->
+    <view class="cover">
+      <image class="image" mode="widthFix" :src="bannerPicture" />
     </view>
   </view>
-
-  <uni-badge />
-  <uni-badge text="2" type="success" />
-  <uni-badge text="3" type="primary" :inverted="true" />
-
-  <uni-fav :checked="false" @click="onClick" />
 </template>
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref } from 'vue';
-const title = ref('uniapp');
+import { ref, inject } from 'vue';
+import type { SubTypeItem } from '@/types/hot';
+import type { ApiType } from '@/types/api';
 
+const $api = inject('$api') as ApiType;
 
 // setup 语法获取页面参数方式 之一
 const query = defineProps<{
@@ -34,44 +28,37 @@ const urlMap = [
   { type: '4', title: '新鲜好物', url: '/hot/new' },
 ];
 
-const currUrlMap = urlMap.find((v) => v.type === query.type);
+const currUrlMap = urlMap.find(v => v.type === query.type);
 // 动态设置标题
 uni.setNavigationBarTitle<UniApp.SetNavigationBarTitleOptions>({ title: currUrlMap?.title || '' });
 
-const onClick = async () => {
-  console.log('fff');
-  // uni.request({
-  //   method: 'GET',
-  //   url: '/home/banner'
-  // })
+// 推荐封面图
+const bannerPicture = ref('');
+
+onLoad(() => {
+  _getHotRecommendData();
+});
+
+/**
+ * 获取热门推荐数据
+ */
+const _getHotRecommendData = async () => {
+  const res = await $api.getHotRecommendAPIApi(currUrlMap!.url, {
+    page: import.meta.env.DEV ? 30 : 1, pageSize: 10
+  });
+  bannerPicture.value = res.result.bannerPicture;
+  console.log(res);
 };
 
 </script>
 
 <style lang="scss">
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  .logo {
-    height: 200rpx;
-    width: 200rpx;
-    margin-top: 200rpx;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50rpx;
-  }
-  .text-area {
-    display: flex;
-    justify-content: center;
-    .title {
-      font-size: 36rpx;
-      color: red;
-    }
-  }
+page {
+  height: 100%;
+  background-color: #f4f4f4;
 }
+</style>
 
-
-
+<style lang="scss" scoped>
+@import './style.scss';
 </style>
