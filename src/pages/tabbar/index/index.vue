@@ -2,12 +2,22 @@
   <view class="viewport">
     <NavBar />
 
-    <!-- 轮播图 -->
-    <DefSwiper :list="bannerList" />
-    <!-- 分类面板 -->
-    <CategoryPanel :list="categoryList" />
-    <!-- 热门推荐 -->
-    <HotPanel :list="hotList" />
+    <scroll-view
+      enable-back-to-top
+      refresher-enabled
+      class="scroll-view"
+      scroll-y
+      @scrolltolower="onScrolltolowerEvt"
+    >
+      <!-- 轮播图 -->
+      <DefSwiper :list="bannerList" />
+      <!-- 分类面板 -->
+      <CategoryPanel :list="categoryList" />
+      <!-- 热门推荐 -->
+      <HotPanel :list="hotList" />
+      <!-- 猜你喜欢 -->
+      <GuessLike ref="guessLikeRef" />
+    </scroll-view>
   </view>
 </template>
 
@@ -17,10 +27,13 @@ import CategoryPanel from './components/CategoryPanel/CategoryPanel.vue';
 import HotPanel from './components/HotPanel/HotPanel.vue';
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, inject } from 'vue';
-import type { ApiType } from '@/types/api';
 import type { BannerItem, CategoryItem, HotItem } from '@/types/home';
+import { useGuessLikeHook } from '@/hooks/useGoodsHook';
+import type { ApiType } from '@/types/api';
 
 const $api = inject('$api') as ApiType;
+
+const { guessLikeRef, onScrolltolowerEvt } = useGuessLikeHook();
 
 // 轮播图
 const bannerList = ref<BannerItem[]>([]);
@@ -62,7 +75,7 @@ const _getHomeHotData = async () => {
 page {
   background-color: #f7f7f7;
   height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
 }
 </style>
 

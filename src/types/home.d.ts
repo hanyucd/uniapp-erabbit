@@ -1,3 +1,4 @@
+import type { GoodsItem } from './common';
 
 /** 首页-广告区域数据类型 */
 export type BannerItem = {
@@ -36,3 +37,6 @@ export type HotItem = {
   /** 推荐类型 */
   type: string;
 };
+
+/** 猜你喜欢-商品类型 */
+export type GuessItem = GoodsItem;
