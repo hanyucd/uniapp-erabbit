@@ -38,7 +38,7 @@ const guessList = ref<GuessItem[]>([]);
 const finish = ref(false);
 
 // 分页参数 | Required<T> 把一个对象的属性转换成必选
-const pageParams: PageParams = {
+const pageParams: Required<PageParams> = {
   page: 1,
   pageSize: 10,
 };
