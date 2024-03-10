@@ -4,6 +4,56 @@
     <view class="cover">
       <image class="image" mode="widthFix" :src="bannerPicture" />
     </view>
+
+    <!-- 推荐选项 -->
+    <view class="tabs">
+      <text
+        v-for="(item, index) in subTypes"
+        :key="item.id"
+        class="text"
+        :class="{ active: index === activeIndex }"
+        @click="activeIndex = index"
+      >
+        {{ item.title }}
+      </text>
+    </view>
+
+    <!-- 推荐列表 -->
+    <scroll-view
+      v-for="(item, index) in subTypes"
+      v-show="activeIndex === index"
+      :key="item.id"
+      class="scroll-view"
+      enable-back-to-top
+      scroll-y
+      @scrolltolower="onScrolltolowerEvt"
+    >
+      <view class="goods">
+        <navigator
+          v-for="goods in item.goodsItems.items"
+          :key="goods.id"
+          hover-class="none"
+          class="navigator"
+          :url="`/pages/module-goods/goods/goods?id=${goods.id}`"
+        >
+          <image class="thumb" :src="goods.picture" />
+          <view class="name ellipsis">
+            {{ goods.name }}
+          </view>
+          <view class="price">
+            <text class="symbol">
+              ¥
+            </text>
+            <text class="number">
+              {{ goods.price }}
+            </text>
+          </view>
+        </navigator>
+      </view>
+      <view class="loading-text">
+        {{ item.finish ? '没有更多数据了~' : '正在加载...' }}
+      </view>
+    </scroll-view>
   </view>
 </template>
 
@@ -34,6 +84,10 @@ uni.setNavigationBarTitle<UniApp.SetNavigationBarTitleOptions>({ title: currUrlM
 
 // 推荐封面图
 const bannerPicture = ref('');
+// 推荐选项
+const subTypes = ref<(SubTypeItem & { finish?: boolean })[]>([]);
+// 高亮的下标
+const activeIndex = ref(0);
 
 onLoad(() => {
   _getHotRecommendData();
@@ -44,12 +98,38 @@ onLoad(() => {
  */
 const _getHotRecommendData = async () => {
   const res = await $api.getHotRecommendAPIApi(currUrlMap!.url, {
-    page: import.meta.env.DEV ? 30 : 1, pageSize: 10
+    page: import.meta.env.DEV ? 2 : 1, pageSize: 10
   });
   bannerPicture.value = res.result.bannerPicture;
-  console.log(res);
+  subTypes.value = res.result.subTypes;
 };
 
+// 滚动触底
+const onScrolltolowerEvt = async () => {
+  // 获取当前选项
+  const currsubTypes = subTypes.value[activeIndex.value];
+  // 分页条件
+  if (currsubTypes.goodsItems.page < currsubTypes.goodsItems.pages) {
+    // 当前页码累加
+    currsubTypes.goodsItems.page++;
+  } else {
+    // 标记已结束
+    currsubTypes.finish = true;
+    // 退出并轻提示
+    return uni.showToast({ icon: 'none', title: '没有更多数据了~' });
+  }
+
+  // 调用API传参
+  const res = await $api.getHotRecommendAPIApi(currUrlMap!.url, {
+    subType: currsubTypes.id,
+    page: currsubTypes.goodsItems.page,
+    pageSize: currsubTypes.goodsItems.pageSize,
+  });
+  // 新的列表选项
+  const newsubTypes = res.result.subTypes[activeIndex.value];
+  // 数组追加
+  currsubTypes.goodsItems.items.push(...newsubTypes.goodsItems.items);
+};
 </script>
 
 <style lang="scss">

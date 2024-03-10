@@ -19,6 +19,7 @@
 }
 .scroll-view {
   flex: 1;
+  overflow: hidden;
 }
 .tabs {
   display: flex;
@@ -51,12 +52,15 @@
   }
 }
 .goods {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  // display: flex;
+  // flex-wrap: wrap;
+  // justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20rpx;
   padding: 0 20rpx 20rpx;
   .navigator {
-    width: 345rpx;
+    // width: 345rpx;
     padding: 20rpx;
     margin-top: 20rpx;
     border-radius: 10rpx;
