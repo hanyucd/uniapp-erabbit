@@ -25,6 +25,7 @@
           </text>
         </view>
       </scroll-view>
+
       <!-- 右侧：二级分类 -->
       <scroll-view enable-back-to-top class="secondary" scroll-y>
         <!-- 焦点图 -->
@@ -68,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { onLoad, onShow } from '@dcloudio/uni-app';
+import { onLoad } from '@dcloudio/uni-app';
 import { ref, computed, inject } from 'vue';
 import type { CategoryTopItem } from '@/types/category';
 import type { BannerItem } from '@/types/home';
@@ -92,6 +93,7 @@ const activeIndex = ref(0);
 const subCategoryList = computed(() => {
   return categoryList.value[activeIndex.value]?.children || [];
 });
+
 /**
  * 加载 banner
  */
