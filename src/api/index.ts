@@ -2,6 +2,7 @@ import httpRequest from './httpRequest';
 import type * as TypeHome from '@/types/home';
 import type * as TypeCommon from '@/types/common';
 import type * as TypeHot from '@/types/hot';
+import type * as TypeCategory from '@/types/category';
 
 export default {
   // 获取banner 图片
@@ -14,4 +15,6 @@ export default {
   getGoodsGuessLikeApi: (param?: TypeCommon.PageParams) => httpRequest<TypeCommon.PageResult<TypeHome.GuessItem>>(`/home/goods/guessLike`, param),
   // 获取热门推荐商品
   getHotRecommendAPIApi: (reqUrl: string, param: TypeCommon.PageParams & { subType?: string } ) => httpRequest<TypeHot.HotResult>(`${ reqUrl }`, param),
+  // 获取分类列表
+  getCategoryTopApi: () => httpRequest<TypeCategory.CategoryTopItem[]>(`/category/top`),
 };

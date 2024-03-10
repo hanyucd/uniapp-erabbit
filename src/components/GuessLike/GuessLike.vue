@@ -6,7 +6,7 @@
     </text>
   </view>
   <view class="guess">
-    <navigator v-for="item in guessList" :key="item.id" class="guess-item" :url="`/pages/goods/goods?id=${item.id}`">
+    <navigator v-for="item in guessList" :key="item.id" class="guess-item" :url="`/pages/module-goods/goods/goods?id=${item.id}`">
       <image class="image" mode="aspectFill" :src="item.picture" />
       <view class="name">
         {{ item.name }}
