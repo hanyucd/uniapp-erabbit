@@ -3,6 +3,7 @@ import type * as TypeHome from '@/types/home';
 import type * as TypeCommon from '@/types/common';
 import type * as TypeHot from '@/types/hot';
 import type * as TypeCategory from '@/types/category';
+import type * as TypeGoods from '@/types/goods';
 
 export default {
   // 获取banner 图片
@@ -17,4 +18,6 @@ export default {
   getHotRecommendAPIApi: (reqUrl: string, param: TypeCommon.PageParams & { subType?: string } ) => httpRequest<TypeHot.HotResult>(`${ reqUrl }`, param),
   // 获取分类列表
   getCategoryTopApi: () => httpRequest<TypeCategory.CategoryTopItem[]>(`/category/top`),
+  // 获取商品详情
+  getGoodsDetailApi: (param: { id: string }) => httpRequest<TypeGoods.GoodsResult>(`/goods`, param),
 };

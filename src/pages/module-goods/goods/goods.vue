@@ -1,12 +1,190 @@
 <template>
-  <view>
-    详情
-  </view>
+  <scroll-view enable-back-to-top scroll-y class="viewport">
+    <!-- 基本信息 -->
+    <view class="goods">
+      <!-- 商品主图 -->
+      <view class="preview">
+        <swiper :style="{ height: '100%' }" circular @change="onChange">
+          <swiper-item v-for="item in goods?.mainPictures" :key="item">
+            <image class="image" mode="aspectFill" :src="item" @click="onTapImage(item)" />
+          </swiper-item>
+        </swiper>
+
+        <view class="indicator">
+          <text class="current">
+            {{ currentIndex + 1 }}
+          </text>
+          <text class="split">
+            /
+          </text>
+          <text class="total">
+            {{ goods?.mainPictures.length }}
+          </text>
+        </view>
+      </view>
+
+      <!-- 商品简介 -->
+      <view class="meta">
+        <view class="price">
+          <text class="symbol">
+            ¥
+          </text>
+          <text class="number">
+            {{ goods?.price }}
+          </text>
+        </view>
+        <view class="name ellipsis">
+          {{ goods?.name }}
+        </view>
+        <view class="desc">
+          {{ goods?.desc }}
+        </view>
+      </view>
+
+      <!-- 操作面板 -->
+      <view class="action">
+        <view class="item arrow" @tap="openSkuPopup(SkuMode.Both)">
+          <text class="label">
+            选择
+          </text>
+          <text class="text ellipsis">
+            <!-- {{ selectArrText }} -->
+          </text>
+        </view>
+        <view class="item arrow" @tap="openPopup('address')">
+          <text class="label">
+            送至
+          </text>
+          <text class="text ellipsis">
+            请选择收获地址
+          </text>
+        </view>
+        <view class="item arrow" @tap="openPopup('service')">
+          <text class="label">
+            服务
+          </text>
+          <text class="text ellipsis">
+            无忧退 快速退款 免费包邮
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 商品详情 -->
+    <view class="detail panel">
+      <view class="title">
+        <text>详情</text>
+      </view>
+      <view class="content">
+        <view class="properties">
+          <!-- 属性详情 -->
+          <view v-for="item in goods?.details.properties" :key="item.name" class="item">
+            <text class="label">
+              {{ item.name }}
+            </text>
+            <text class="value">
+              {{ item.value }}
+            </text>
+          </view>
+        </view>
+        <!-- 图片详情 -->
+        <image v-for="item in goods?.details.pictures" :key="item" class="image" mode="widthFix" :src="item" />
+        <!-- <view>
+        </view> -->
+      </view>
+    </view>
+
+    <!-- 同类推荐 -->
+    <view class="similar panel">
+      <view class="title">
+        <text>同类推荐</text>
+      </view>
+
+      <view class="content">
+        <navigator v-for="item in goods?.similarProducts" :key="item.id" class="goods" hover-class="none" :url="`/pages/module-goods/goods/goods?id=${item.id}`">
+          <image class="image" mode="aspectFill" :src="item.picture" />
+          <view class="name ellipsis">
+            {{ item.name }}
+          </view>
+          <view class="price">
+            <text class="symbol">
+              ¥
+            </text>
+            <text class="number">
+              {{ item.price }}
+            </text>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
 </template>
 
 <script setup lang="ts">
+import { onLoad } from '@dcloudio/uni-app';
+import { ref, inject } from 'vue';
+import type { GoodsResult } from '@/types/goods';
+import type { ApiType } from '@/types/api';
 
+const $api = inject('$api') as ApiType;
+// 接收页面参数
+const query = defineProps<{
+  id: string;
+}>();
+
+// 商品详情信息
+const goods = ref<GoodsResult>();
+
+onLoad(() => {
+  _getGoodsDetail();
+});
+
+/**
+ * 获取商品详情
+ */
+const _getGoodsDetail = async () => {
+  const { result: goodsResult } = await $api.getGoodsDetailApi({ id: query.id });
+  goods.value = goodsResult;
+};
+
+// 轮播图变化时
+const currentIndex = ref(0);
+const onChange = (ev) => {
+  // currentIndex.value = ev.detail.current;
+
+  // console.log(ev);
+};
+
+// 点击图片时
+const onTapImage = (url: string) => {
+  // 大图预览
+  uni.previewImage({ current: url, urls: goods.value!.mainPictures });
+};
+
+// 按钮模式
+enum SkuMode {
+  Both = 1,
+  Cart = 2,
+  Buy = 3,
+}
+
+const mode = ref<SkuMode>(SkuMode.Cart);
+
+// 打开SKU弹窗修改按钮模式
+const openSkuPopup = (val: SkuMode) => {};
+
+// 弹出层条件渲染
+const openPopup = (name: string) => {};
 </script>
+
+<style lang="scss">
+page {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+</style>
 
 <style lang="scss" scoped>
 @import './style.scss';
