@@ -1,3 +1,4 @@
+import { useMemberStore } from '@/stores';
 
 const baseURL = 'https://pcapi-xiaotuxian-front-devtest.itheima.net';
 
@@ -11,13 +12,18 @@ const httpInterceptor: UniApp.InterceptorOptions = {
 
     // 2. 请求超时, 默认 60s
     options.timeout = 10000;
-
+    
+    // 3. 添加小程序端请求头标识
     options.header = {
       ...options.header,
       'source-client': 'miniapp',
     };
     
     // console.log(options);
+    // 4. 添加 token 请求头标识
+    const memberStore = useMemberStore();
+    const userToken = memberStore.userToken;
+    userToken && (options.header.Authorization = userToken);
   }
 };
 
@@ -48,6 +54,10 @@ const httpRequest = <T = any>(url = '', data = {}, method: string = 'get', other
           resolve(res.data as IResponse<T>);
           // 401错误  -> 清理用户信息，跳转到登录页
         } else if (res.statusCode === 401) {
+          const memberStore = useMemberStore();
+          memberStore.clearProfile();
+          uni.navigateTo({ url: '/pages/login/login' });
+          
           reject(res);
         } else {
           // 其他错误 -> 根据后端错误信息轻提示
