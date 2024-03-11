@@ -13,8 +13,10 @@ type LoginWxMinParams = {
 };
 
 export default {
-  // 获取banner 图片
+  // 微信小程序登录
   postLoginWxMinApi: (param: LoginWxMinParams) => httpRequest<TypeMember.LoginResult>(`/login/wxMin`, param, 'post'),
+  // 微信小程序登录-内测版
+  postLoginWxMinSimpleApi: (param: { phoneNumber: string }) => httpRequest<TypeMember.LoginResult>(`/login/wxMin/simple`, param, 'post'),
   // 获取banner 图片
   getBannerApi: (param: { distributionSite: number }) => httpRequest<TypeHome.BannerItem[]>(`/home/banner`, param),
   // 获取首页分类列表
