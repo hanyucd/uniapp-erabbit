@@ -118,9 +118,18 @@
       </view>
     </view>
   </scroll-view>
+
+  <!-- uni-ui 弹出层 -->
+  <uni-popup ref="popup" type="bottom" background-color="#fff">
+    <AddressPanel v-if="popupName === 'address'" @close="popup?.close()" />
+    <ServicePanel v-if="popupName === 'service'" @close="popup?.close()" />
+  </uni-popup>
 </template>
 
 <script setup lang="ts">
+import AddressPanel from './components/AddressPanel/AddressPanel.vue';
+import ServicePanel from './components/ServicePanel/ServicePanel.vue';
+
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, inject } from 'vue';
 import type { GoodsResult } from '@/types/goods';
@@ -149,10 +158,8 @@ const _getGoodsDetail = async () => {
 
 // 轮播图变化时
 const currentIndex = ref(0);
-const onChange = (ev) => {
-  // currentIndex.value = ev.detail.current;
-
-  // console.log(ev);
+const onChange: UniHelper.SwiperOnChange = (ev) => {
+  currentIndex.value = ev.detail.current;
 };
 
 // 点击图片时
@@ -173,8 +180,20 @@ const mode = ref<SkuMode>(SkuMode.Cart);
 // 打开SKU弹窗修改按钮模式
 const openSkuPopup = (val: SkuMode) => {};
 
+// uni-ui 弹出层组件 ref
+const popup = ref<{
+  open: (type?: UniHelper.UniPopupType ) => void;
+  close: () => void;
+}>();
+
 // 弹出层条件渲染
-const openPopup = (name: string) => {};
+const popupName = ref<'address' | 'service'>();
+
+// 弹出层条件渲染
+const openPopup = (name: typeof popupName.value) => {
+  popupName.value = name; // 修改弹出层名称
+  popup.value?.open();
+};
 </script>
 
 <style lang="scss">

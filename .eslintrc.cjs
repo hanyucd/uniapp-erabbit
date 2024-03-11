@@ -48,6 +48,7 @@ module.exports = {
     ],
 
     'vue/multi-word-component-names': 'off', // 关闭 组件名称始终是多个单词
+    'vue/singleline-html-element-content-newline': 'off', // 关闭 在单行元素的内容之前和之后换行
     // 控制一/多行可接受的属性量
     'vue/max-attributes-per-line': [
       'error',
