@@ -16,6 +16,7 @@
           </navigator>
         </view>
       </view>
+
       <!-- 情况2：未登录 -->
       <view v-else class="overview">
         <navigator url="/pages/login/login" hover-class="none">
@@ -30,9 +31,8 @@
           </view>
         </view>
       </view>
-      <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">
-        设置
-      </navigator>
+
+      <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">设置</navigator>
     </view>
     <!-- 我的订单 -->
     <view class="orders">
@@ -44,14 +44,7 @@
       </view>
       <view class="section">
         <!-- 订单 -->
-        <navigator
-          v-for="item in orderTypes"
-          :key="item.type"
-          :class="item.icon"
-          :url="`/pagesOrder/list/list?type=${item.type}`"
-          class="navigator"
-          hover-class="none"
-        >
+        <navigator v-for="item in orderTypes" :key="item.type" :class="item.icon" :url="`/pagesOrder/list/list?type=${item.type}`" class="navigator" hover-class="none">
           {{ item.text }}
         </navigator>
         
@@ -61,6 +54,7 @@
         <!-- #endif -->
       </view>
     </view>
+    
     <!-- 猜你喜欢 -->
     <view class="guess">
       <!-- 猜你喜欢 -->

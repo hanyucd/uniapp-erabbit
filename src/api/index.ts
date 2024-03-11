@@ -6,12 +6,14 @@ import type * as TypeCategory from '@/types/category';
 import type * as TypeGoods from '@/types/goods';
 import type * as TypeMember from '@/types/member';
 
+// 小程序登录参数
 type LoginWxMinParams = {
   code: string;
   encryptedData?: string;
   iv?: string;
 };
 
+// 手机号+密码 登录参数
 type LoginParams = {
   account: string;
   password: string;
@@ -22,7 +24,7 @@ export default {
   postLoginWxMinApi: (param: LoginWxMinParams) => httpRequest<TypeMember.LoginResult>(`/login/wxMin`, param, 'post'),
   // 微信小程序登录-内测版
   postLoginWxMinSimpleApi: (param: { phoneNumber: string }) => httpRequest<TypeMember.LoginResult>(`/login/wxMin/simple`, param, 'post'),
-  // 手机号 + 短信登录
+  // 手机号 + 密码登录
   postLoginApi: (param: LoginParams) => httpRequest<TypeMember.LoginResult>(`/login`, param, 'post'),
   // 获取banner 图片
   getBannerApi: (param: { distributionSite: number }) => httpRequest<TypeHome.BannerItem[]>(`/home/banner`, param),
