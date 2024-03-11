@@ -4,8 +4,17 @@ import type * as TypeCommon from '@/types/common';
 import type * as TypeHot from '@/types/hot';
 import type * as TypeCategory from '@/types/category';
 import type * as TypeGoods from '@/types/goods';
+import type * as TypeMember from '@/types/member';
+
+type LoginWxMinParams = {
+  code: string;
+  encryptedData?: string;
+  iv?: string;
+};
 
 export default {
+  // 获取banner 图片
+  postLoginWxMinApi: (param: LoginWxMinParams) => httpRequest<TypeMember.LoginResult>(`/login/wxMin`, param, 'post'),
   // 获取banner 图片
   getBannerApi: (param: { distributionSite: number }) => httpRequest<TypeHome.BannerItem[]>(`/home/banner`, param),
   // 获取首页分类列表

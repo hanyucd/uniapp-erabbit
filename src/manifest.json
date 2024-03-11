@@ -56,6 +56,7 @@
     /* 小程序特有相关 */
     "mp-weixin" : {
         "appid" : "wxdd8a10083014cf6a",
+        // "appid" : "wx26729f20b9efae3a",
         "setting" : {
             "urlCheck" : false
         },
