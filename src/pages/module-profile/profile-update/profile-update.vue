@@ -41,10 +41,10 @@
         </view>
         <view class="form-item">
           <text class="label">生日</text>
-          <!-- <picker mode="date" class="picker" :value="profile?.birthday" start="1900-01-01" :end="formatDate(new Date())" @change="onBirthdayChange">
+          <picker mode="date" class="picker" :value="profile?.birthday" start="1900-01-01" :end="formatDate(new Date())" @change="onBirthdayChange">
             <view v-if="profile?.birthday">{{ profile?.birthday }}</view>
             <view v-else class="placeholder">请选择日期</view>
-          </picker> -->
+          </picker>
         </view>
         <!-- 只有微信小程序端内置了省市区数据 -->
         <!-- #ifdef MP-WEIXIN -->
@@ -70,6 +70,7 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, computed, inject } from 'vue';
+import { formatDate } from '@/utils';
 import { useMemberStore } from '@/stores';
 import type { Gender, ProfileDetail } from '@/types/member';
 import type { ApiType } from '@/types/api';
@@ -168,10 +169,19 @@ const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
   profile.value.gender = ev.detail.value as Gender;
 };
 
-// 修改城市
+
+/**
+ * 修改生日
+ */
+const onBirthdayChange: UniHelper.DatePickerOnChange = (ev) => {
+  profile.value.birthday = ev.detail.value;
+};
+
 let fullLocationCode = ref<[string, string, string]>(['', '', '']);
+/**
+ * 修改城市
+ */
 const onFullLocationChange: UniHelper.RegionPickerOnChange = (ev) => {
-  // 修改前端界面
   profile.value.fullLocation = ev.detail.value.join(' ');
   fullLocationCode.value = ev.detail.code!;
 };
