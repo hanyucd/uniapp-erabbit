@@ -50,9 +50,9 @@ export default {
   // 获取收货地址
   getMemberAddressApi: () => httpRequest<TypeAddress.AddressItem[]>(`/member/address`),
   // 添加收货地址详情
-  getMemberAddressByIdApi: (id: string) => httpRequest(`/member/address${id}`),
+  getMemberAddressByIdApi: (id: string) => httpRequest(`/member/address/${id}`),
   // 修改收货地址
-  putMemberAddressByIdApi: (id: string, param: TypeAddress.AddressParams) => httpRequest(`/member/address${id}`, param, 'put'),
+  putMemberAddressByIdApi: (id: string, param: TypeAddress.AddressParams) => httpRequest(`/member/address/${id}`, param, 'put'),
   // 删除收货地址
-  deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address${id}`, 'delete'),
+  deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address/${id}`, 'delete'),
 };

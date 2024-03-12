@@ -99,6 +99,21 @@ const rules: UniHelper.UniFormsRules = {
   },
 };
 
+// 获取收货地址详情数据
+const _getMemberAddressByIdData = async () => {
+  if (query.id) {
+    // 发送请求
+    const res = await $api.getMemberAddressByIdApi(query.id);
+    // 把数据合并到表单中
+    Object.assign(form.value, res.result);
+  }
+};
+
+// 页面加载
+onLoad(() => {
+  _getMemberAddressByIdData();
+});
+
 /**
  * 收集所在地区
  */
