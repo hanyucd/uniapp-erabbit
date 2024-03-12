@@ -40,4 +40,8 @@ export default {
   getCategoryTopApi: () => httpRequest<TypeCategory.CategoryTopItem[]>(`/category/top`),
   // 获取商品详情
   getGoodsDetailApi: (param: { id: string }) => httpRequest<TypeGoods.GoodsResult>(`/goods`, param),
+  // 获取个人信息
+  getMemberProfileApi: () => httpRequest<TypeMember.ProfileDetail>(`/member/profile`),
+  // 更新个人信息
+  putMemberProfileApi: (param: TypeMember.ProfileParams) => httpRequest<TypeMember.ProfileDetail>(`/member/profile`, param, 'put'),
 };

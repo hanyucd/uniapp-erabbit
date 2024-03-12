@@ -7,3 +7,6 @@
 # 参考
 
 - 获取手机号登录
+- 封装 uni.request + uni.addInterceptor 请求拦截器
+- pinia-plugin-persistedstate uniap 中修改 storage 存储 方式
+- 微信小程序分包 + 预下载

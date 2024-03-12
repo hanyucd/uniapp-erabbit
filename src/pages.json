@@ -83,6 +83,7 @@
 	// 分包加载
 	"subPackages": [
 		{
+			// 子包的根目录
 			"root": "pages/module-goods",
 			"pages": [
 				{
@@ -98,6 +99,35 @@
           }
         },
 			]
+		},
+		{
+			// 子包的根目录
+			"root": "pages/module-profile",
+			"pages": [
+				{
+          "path": "profile-update/profile-update",
+          "style": {
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "white",
+            "navigationBarTitleText": "个人信息"
+          }
+        },
+				{
+          "path": "profile-setting/profile-setting",
+          "style": {
+            "navigationBarTitleText": "设置"
+          }
+        }
+			]
 		}
-	]
+	],
+	// 分包预下载规则
+	"preloadRule": {
+		"pages/tabbar/profile/profile": {
+			"network": "all",
+			"packages": [
+				"pages/module-profile"
+			]
+		}
+	}
 }

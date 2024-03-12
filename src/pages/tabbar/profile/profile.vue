@@ -4,14 +4,14 @@
     <view class="profile" :style="{ paddingTop: safeAreaTop + 'px' }">
       <!-- 情况1：已登录 -->
       <view v-if="memberStore.profile" class="overview">
-        <navigator url="/pagesMember/profile/profile" hover-class="none">
+        <navigator url="/pages/module-profile/profile-update/profile-update" hover-class="none">
           <image class="avatar" :src="memberStore.profile.avatar" mode="aspectFill" />
         </navigator>
         <view class="meta">
           <view class="nickname">
             {{ memberStore.profile.nickname || memberStore.profile.account }}
           </view>
-          <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
+          <navigator class="extra" url="/pages/module-profile/profile-update/profile-update" hover-class="none">
             <text class="update">更新头像昵称</text>
           </navigator>
         </view>
@@ -32,7 +32,7 @@
         </view>
       </view>
 
-      <navigator class="settings" url="/pagesMember/settings/settings" hover-class="none">设置</navigator>
+      <navigator class="settings" url="/pages/module-profile/profile-setting/profile-setting" hover-class="none">设置</navigator>
     </view>
     <!-- 我的订单 -->
     <view class="orders">
@@ -54,7 +54,7 @@
         <!-- #endif -->
       </view>
     </view>
-    
+
     <!-- 猜你喜欢 -->
     <view class="guess">
       <!-- 猜你喜欢 -->
