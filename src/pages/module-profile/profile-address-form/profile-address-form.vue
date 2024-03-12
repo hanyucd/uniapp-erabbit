@@ -144,13 +144,16 @@ const onSwitchChange: UniHelper.SwitchOnChange = (ev) => {
   form.value.isDefault = ev.detail.value ? 1 : 0;
 };
 
+// 表单组件实例
+const formRef = ref<UniHelper.UniFormsInstance>();
+
 /**
  * 提交表单 & 添加/修改地址
  */
 const onSubmit = async () => {
   try {
     // 表单校验
-    // await formRef.value?.validate?.();
+    await formRef.value?.validate?.();
     // 校验通过后再发送请求
     if (query.id) {
       // 修改地址请求

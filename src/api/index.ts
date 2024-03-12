@@ -54,5 +54,5 @@ export default {
   // 修改收货地址
   putMemberAddressByIdApi: (id: string, param: TypeAddress.AddressParams) => httpRequest(`/member/address/${id}`, param, 'put'),
   // 删除收货地址
-  deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address/${id}`, 'delete'),
+  deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address/${id}`, {}, 'delete'),
 };
