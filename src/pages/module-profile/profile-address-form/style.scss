@@ -1,0 +1,72 @@
+// 深度选择器修改 uni-data-picker 组件样式
+:deep(.selected-area) {
+  flex: 0 1 auto;
+  height: auto;
+}
+
+.content {
+  margin: 20rpx 20rpx 0;
+  padding: 0 20rpx;
+  border-radius: 10rpx;
+  background-color: #fff;
+
+  .form-item,
+  .uni-forms-item {
+    display: flex;
+    align-items: center;
+    min-height: 96rpx;
+    padding: 25rpx 10rpx;
+    background-color: #fff;
+    font-size: 28rpx;
+    border-bottom: 1rpx solid #ddd;
+    position: relative;
+    margin-bottom: 0;
+
+    // 调整 uni-forms 样式
+    .uni-forms-item__content {
+      display: flex;
+    }
+
+    .uni-forms-item__error {
+      margin-left: 200rpx;
+    }
+
+    &:last-child {
+      border: none;
+    }
+
+    .label {
+      width: 200rpx;
+      color: #333;
+    }
+
+    .input {
+      flex: 1;
+      display: block;
+      height: 46rpx;
+    }
+
+    .switch {
+      position: absolute;
+      right: -20rpx;
+      transform: scale(0.8);
+    }
+
+    .picker {
+      flex: 1;
+    }
+
+    .placeholder {
+      color: #808080;
+    }
+  }
+}
+
+.button {
+  height: 80rpx;
+  margin: 30rpx 20rpx;
+  color: #fff;
+  border-radius: 80rpx;
+  font-size: 30rpx;
+  background-color: #27ba9b;
+}

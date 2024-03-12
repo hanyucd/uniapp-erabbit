@@ -117,7 +117,19 @@
           "style": {
             "navigationBarTitleText": "设置"
           }
-        }
+        },
+				{
+					"path": "profile-address/profile-address",
+					"style": {
+						"navigationBarTitleText": "地址管理"
+					}
+				},
+				{
+					"path": "profile-address-form/profile-address-form",
+					"style": {
+						"navigationBarTitleText": ""
+					}
+				}
 			]
 		}
 	],

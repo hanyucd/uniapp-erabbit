@@ -5,6 +5,7 @@ import type * as TypeHot from '@/types/hot';
 import type * as TypeCategory from '@/types/category';
 import type * as TypeGoods from '@/types/goods';
 import type * as TypeMember from '@/types/member';
+import type * as TypeAddress from '@/types/address';
 
 // 小程序登录参数
 type LoginWxMinParams = {
@@ -44,4 +45,14 @@ export default {
   getMemberProfileApi: () => httpRequest<TypeMember.ProfileDetail>(`/member/profile`),
   // 更新个人信息
   putMemberProfileApi: (param: TypeMember.ProfileParams) => httpRequest<TypeMember.ProfileDetail>(`/member/profile`, param, 'put'),
+  // 添加收货地址
+  postMemberAddressApi: (param: TypeAddress.AddressParams) => httpRequest(`/member/address`, param, 'post'),
+  // 获取收货地址
+  getMemberAddressApi: () => httpRequest<TypeAddress.AddressItem[]>(`/member/address`),
+  // 添加收货地址详情
+  getMemberAddressByIdApi: (id: string) => httpRequest(`/member/address${id}`),
+  // 修改收货地址
+  putMemberAddressByIdApi: (id: string, param: TypeAddress.AddressParams) => httpRequest(`/member/address${id}`, param, 'put'),
+  // 删除收货地址
+  deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address${id}`, 'delete'),
 };
