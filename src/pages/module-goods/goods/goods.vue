@@ -233,7 +233,7 @@ const onTapImage = (url: string) => {
   uni.previewImage({ current: url, urls: goods.value!.mainPictures });
 };
 
-// 按钮模式
+// SKU按钮模式
 enum SkuMode {
   Both = 1,
   Cart = 2,
@@ -252,7 +252,9 @@ const mode = ref<SkuMode>(SkuMode.Cart);
 // 是否显示SKU组件
 const isShowSku = ref(false);
 
-// 打开SKU弹窗修改按钮模式
+/**
+ * 打开SKU弹窗修改按钮模式
+ */
 const openSkuPopup = (val: SkuMode) => {
   // 显示SKU弹窗
   isShowSku.value = true;
@@ -260,16 +262,19 @@ const openSkuPopup = (val: SkuMode) => {
   mode.value = val;
 };
 
-// 加入购物车事件
+/**
+ * 加入购物车事件
+ */
 const onAddCart = async (ev: SkuPopupEvent) => {
   console.log(ev);
   await $api.postMemberCartApi({ skuId: ev._id, count: ev.buy_num });
   uni.showToast({ title: '添加成功' });
   isShowSku.value = false;
-  
 };
 
-// 立即购买
+/**
+ * 立即购买
+ */
 const onBuyNow = (ev: SkuPopupEvent) => {
   // uni.navigateTo({ url: `/pagesOrder/create/create?skuId=${ev._id}&count=${ev.buy_num}` })
 };
