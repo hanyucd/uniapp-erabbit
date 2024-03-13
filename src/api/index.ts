@@ -55,4 +55,14 @@ export default {
   putMemberAddressByIdApi: (id: string, param: TypeAddress.AddressParams) => httpRequest(`/member/address/${id}`, param, 'put'),
   // 删除收货地址
   deleteMemberAddressByIdApi: (id: string) => httpRequest(`/member/address/${id}`, {}, 'delete'),
+  // 加入购物车
+  postMemberCartApi: (param: { skuId: string; count: number }) => httpRequest(`/member/cart`, param, 'post'),
+  // 获取购物车列表
+  getMemberCartApi: () => httpRequest(`/member/cart`),
+  // 删除/清空购物车单品
+  deleteMemberCartApi: (param: { ids: string[] }) => httpRequest(`/member/cart`, param, 'delete'),
+  // 修改购物车单品
+  putMemberCartBySkuIdApi: (skuId: string, param: { selected?: boolean; count?: number }) => httpRequest(`/member/cart/${skuId}`, param, 'put'),
+  // 购物车全选/取消全选
+  putMemberCartSelectedApi: (param: { selected: boolean }) => httpRequest(`/member/cart/selected`, param, 'put'),
 };

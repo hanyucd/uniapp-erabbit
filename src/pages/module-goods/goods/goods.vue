@@ -261,7 +261,13 @@ const openSkuPopup = (val: SkuMode) => {
 };
 
 // 加入购物车事件
-const onAddCart = async (ev: SkuPopupEvent) => {};
+const onAddCart = async (ev: SkuPopupEvent) => {
+  console.log(ev);
+  await $api.postMemberCartApi({ skuId: ev._id, count: ev.buy_num });
+  uni.showToast({ title: '添加成功' });
+  isShowSku.value = false;
+  
+};
 
 // 立即购买
 const onBuyNow = (ev: SkuPopupEvent) => {
