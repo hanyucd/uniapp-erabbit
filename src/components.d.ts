@@ -11,5 +11,7 @@ declare module 'vue' {
     GuessLike: typeof import('./components/GuessLike/GuessLike.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VkDataGoodsSkuPopup: typeof import('./components/vk-data-goods-sku-popup/vk-data-goods-sku-popup.vue')['default']
+    VkDataInputNumberBox: typeof import('./components/vk-data-input-number-box/vk-data-input-number-box.vue')['default']
   }
 }
