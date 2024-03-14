@@ -195,7 +195,7 @@ const gotoPayment = () => {
     return uni.showToast({ icon: 'none', title: '请选择商品', });
   }
   // 跳转到结算页
-  uni.navigateTo({ url: '/pagesOrder/create/create' });
+  uni.navigateTo({ url: '/pages/module-order/order-create/order-create' });
 };
 </script>
 

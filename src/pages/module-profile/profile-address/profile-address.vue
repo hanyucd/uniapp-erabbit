@@ -40,9 +40,12 @@
 <script setup lang="ts">
 import { onShow } from '@dcloudio/uni-app';
 import { ref, inject } from 'vue';
+import { useAddressStore } from '@/stores/modules/addressModule';
 import type { AddressItem } from '@/types/address';
 import type { ApiType } from '@/types/api';
 const $api = inject('$api') as ApiType;
+
+const addressStore = useAddressStore();
 
 // 获取收货地址列表数据
 const addressList = ref<AddressItem[]>([]);
@@ -56,13 +59,14 @@ onShow(() => {
   _getMemberAddressData();
 });
 
-// 修改收货地址
+/**
+ * 修改收货地址
+ */
 const onChangeAddress = (item: AddressItem) => {
   // 修改地址
-  // const addressStore = useAddressStore();
-  // addressStore.changeSelectedAddress(item);
+  addressStore.changeSelectedAddress(item);
   // 返回上一页
-  // uni.navigateBack();
+  uni.navigateBack();
 };
 
 /**

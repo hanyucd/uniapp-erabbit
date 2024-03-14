@@ -32,7 +32,6 @@ import { ref, inject } from 'vue';
 import type { BannerItem, CategoryItem, HotItem } from '@/types/home';
 import { useGuessLikeHook } from '@/hooks/useGoodsHook';
 import type { ApiType } from '@/types/api';
-
 const $api = inject('$api') as ApiType;
 
 const { guessLikeRef, onScrolltolowerEvt } = useGuessLikeHook();

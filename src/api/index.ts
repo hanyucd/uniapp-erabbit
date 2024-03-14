@@ -7,6 +7,7 @@ import type * as TypeGoods from '@/types/goods';
 import type * as TypeMember from '@/types/member';
 import type * as TypeAddress from '@/types/address';
 import type * as TypeCart from '@/types/cart';
+import type * as TypeOrder from '@/types/order';
 
 // 小程序登录参数
 type LoginWxMinParams = {
@@ -66,4 +67,14 @@ export default {
   putMemberCartBySkuIdApi: (skuId: string, param: { selected?: boolean; count?: number }) => httpRequest(`/member/cart/${skuId}`, param, 'put'),
   // 购物车全选/取消全选
   putMemberCartSelectedApi: (param: { selected: boolean }) => httpRequest(`/member/cart/selected`, param, 'put'),
+  // 填写订单-获取立即购买订单
+  getMemberOrderPreNowApi: (param: { skuId: string; count: string; addressId?: string }) => httpRequest<TypeOrder.OrderPreResult>(`/member/order/pre/now`, param),
+  // 填写订单-获取预付订单
+  getMemberOrderPreApi: () => httpRequest<TypeOrder.OrderPreResult>(`/member/order/pre`),
+  // 提交订单
+  postMemberOrderApi: (param: TypeOrder.OrderCreateParams) => httpRequest<{ id: string }>(`/member/order`, param),
+  // 填写订单-再次购买
+  getMemberOrderRepurchaseByIdApi: (id: string) => httpRequest<TypeOrder.OrderPreResult>(`/member/order/repurchase/${id}`),
+  // 获取订单详情
+  getMemberOrderByIdApi: (id: string) => httpRequest<TypeOrder.OrderResult>(`/member/order/${id}`),
 };
