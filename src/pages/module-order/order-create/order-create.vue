@@ -59,7 +59,7 @@
     <view class="total-pay symbol">
       <text class="number">{{ orderPre?.summary.totalPayPrice.toFixed(2) }}</text>
     </view>
-    <view class="button" :class="{ disabled: !selecteAddress?.id }" @cick="onOrderSubmit">
+    <view class="button" :class="{ disabled: !selecteAddress?.id }" @click="onOrderSubmit">
       提交订单
     </view>
   </view>
@@ -113,6 +113,7 @@ onLoad(() => {
  */
 const getMemberOrderPreData = async () => {
   if (query.count && query.skuId) {
+    // 立即购买
     const res = await $api.getMemberOrderPreNowApi({ count: query.count, skuId: query.skuId, });
     orderPre.value = res.result;
   } else if (query.orderId) {
@@ -132,7 +133,20 @@ const selecteAddress = computed(() => {
 
 // 提交订单
 const onOrderSubmit = async () => {
+  // 没有收货地址提醒
+  if (!selecteAddress.value?.id) return uni.showToast({ icon: 'none', title: '请选择收货地址' });
+  // 发送请求
+  const res = await $api.postMemberOrderApi({
+    addressId: selecteAddress.value?.id,
+    buyerMessage: buyerMessage.value,
+    deliveryTimeType: activeDelivery.value.type,
+    goods: orderPre.value!.goods.map((v) => ({ count: v.count, skuId: v.skuId })),
+    payChannel: 2,
+    payType: 1,
+  });
 
+  // 关闭当前页面，跳转到订单详情，传递订单id
+  uni.redirectTo({ url: `/pages/module-order/order-detail/order-detail?id=${res.result.id}` });
 };
 </script>
 
