@@ -1,0 +1,44 @@
+
+.viewport {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+// tabs
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  line-height: 60rpx;
+  margin: 0 10rpx;
+  background-color: #fff;
+  box-shadow: 0 4rpx 6rpx rgba(240, 240, 240, 0.6);
+  position: relative;
+  z-index: 9;
+
+  .item {
+    flex: 1;
+    text-align: center;
+    padding: 20rpx;
+    font-size: 28rpx;
+    color: #262626;
+  }
+
+  .cursor {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    // width: 20%;
+    height: 6rpx;
+    padding: 0 50rpx;
+    background-color: #27ba9b;
+    /* 过渡效果 */
+    transition: all 0.4s;
+  }
+}
+
+// swiper
+.swiper {
+  background-color: #f7f7f8;
+}
