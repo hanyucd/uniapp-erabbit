@@ -171,8 +171,8 @@ import { onLoad } from '@dcloudio/uni-app';
 import { ref, computed, inject } from 'vue';
 import type { GoodsResult } from '@/types/goods';
 import type { ApiType } from '@/types/api';
-
 const $api = inject('$api') as ApiType;
+
 // 接收页面参数
 const query = defineProps<{
   id: string;

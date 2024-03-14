@@ -6,6 +6,7 @@ import type * as TypeCategory from '@/types/category';
 import type * as TypeGoods from '@/types/goods';
 import type * as TypeMember from '@/types/member';
 import type * as TypeAddress from '@/types/address';
+import type * as TypeCart from '@/types/cart';
 
 // 小程序登录参数
 type LoginWxMinParams = {
@@ -58,7 +59,7 @@ export default {
   // 加入购物车
   postMemberCartApi: (param: { skuId: string; count: number }) => httpRequest(`/member/cart`, param, 'post'),
   // 获取购物车列表
-  getMemberCartApi: () => httpRequest(`/member/cart`),
+  getMemberCartApi: () => httpRequest<TypeCart.CartItem[]>(`/member/cart`),
   // 删除/清空购物车单品
   deleteMemberCartApi: (param: { ids: string[] }) => httpRequest(`/member/cart`, param, 'delete'),
   // 修改购物车单品
