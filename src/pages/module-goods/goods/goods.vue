@@ -145,7 +145,7 @@
         <text class="icon-handset" />客服
       </button>
       <!-- #endif -->
-      <navigator class="icons-button" url="/pages/cart/cart2" open-type="navigate">
+      <navigator class="icons-button" url="/pages/tabbar/cart/cart" open-type="switchTab">
         <text class="icon-cart" />购物车
       </navigator>
     </view>

@@ -16,7 +16,7 @@
             <!-- 商品信息 -->
             <view class="goods">
               <!-- 选中状态 -->
-              <text class="checkbox" :class="{ checked: item.selected }" @click="onChangeSelected(item)" />
+              <text class="checkbox" :class="{ checked: item.selected }" @click="onChangeSelected(item)">{{ item.selected ? '✓' : '' }}</text>
               <navigator :url="`/pages/module-goods/goods/goods?id=${item.id}`" hover-class="none" class="navigator">
                 <image mode="aspectFill" class="picture" :src="item.picture" />
                 <view class="meta">
@@ -44,14 +44,14 @@
       <view v-else class="cart-blank">
         <image src="/static/images/blank_cart.png" class="image" />
         <text class="text">购物车还是空的，快来挑选好货吧</text>
-        <navigator url="/pages/tabbar/index/index" hover-class="none">
+        <navigator url="/pages/tabbar/index/index" open-type="switchTab" hover-class="none">
           <button class="button">去首页看看</button>
         </navigator>
       </view>
 
       <!-- 吸底工具栏 -->
       <view v-if="showCartList" class="toolbar" :style="{ paddingBottom: safeAreaInsetBottom ? safeAreaInsets?.bottom + 'px' : 0 }">
-        <text class="all" :class="{ checked: isSelectedAll }" @click="onChangeSelectedAll">全选</text>
+        <text class="all" :class="{ checked: isSelectedAll }" @click="onChangeSelectedAll">{{ isSelectedAll ? '✓' : '' }} 全选</text>
         <text class="text">合计:</text>
         <text class="amount">{{ selectedCartListMoney }}</text>
         <view class="button-grounp">
@@ -87,7 +87,6 @@ import type { CartItem } from '@/types/cart';
 import type { ApiType } from '@/types/api';
 const $api = inject('$api') as ApiType;
 
-
 const { guessLikeRef, onScrolltolowerEvt } = useGuessLikeHook();
 // 获取会员信息
 const memberStore = useMemberStore();
@@ -103,9 +102,18 @@ const { safeAreaInsets } = uni.getSystemInfoSync();
 onLoad(() => {
 });
 
+/**
+ * 获取购物车列表
+ */
+ const _getMemberCartData = async () => {
+  const res = await $api.getMemberCartApi();
+  cartList.value = res.result;
+  showCartList.value = res.result.length > 0;
+};
+
 onShow(() => {
   if (memberStore.profile) {
-    getMemberCartData();
+    _getMemberCartData();
   }
 });
 
@@ -136,20 +144,19 @@ const selectedCartListMoney = computed(() => {
     .toFixed(2);
 });
 
-/**
- * 获取购物车列表
- */
-const getMemberCartData = async () => {
-  const res = await $api.getMemberCartApi();
-  cartList.value = res.result;
-  showCartList.value = res.result.length > 0;
-};
 
 // 修改选中状态-单品修改
-const onChangeSelected = (item: CartItem) => {};
+const onChangeSelected = (item: CartItem) => {
+  // 前端数据更新-是否选中取反
+  item.selected = !item.selected;
+  // 后端数据更新
+  $api.putMemberCartBySkuIdApi(item.skuId, { selected: item.selected });
+};
 
 // 修改商品数量
-const onChangeCount = (ev: InputNumberBoxEvent) => {};
+const onChangeCount = (ev: InputNumberBoxEvent) => {
+  $api.putMemberCartBySkuIdApi(ev.index, { count: ev.value });
+};
 
 // 点击删除按钮
 const onDeleteCart = (skuId: string) => {
@@ -162,14 +169,25 @@ const onDeleteCart = (skuId: string) => {
         // 后端删除单品
         await $api.deleteMemberCartApi({ ids: [skuId] });
         // 重新获取列表
-        getMemberCartData();
+        _getMemberCartData();
       }
     },
   });
 };
 
-// 修改选中状态-全选修改
-const onChangeSelectedAll = () => {};
+/**
+ * 修改选中状态-全选修改
+ */
+const onChangeSelectedAll = () => {
+  // 全选状态取反
+  const _isSelectedAll = !isSelectedAll.value;
+  // 前端数据更新
+  cartList.value.forEach((item) => {
+    item.selected = _isSelectedAll;
+  });
+  // 后端数据更新
+  $api.putMemberCartSelectedApi({ selected: _isSelectedAll });
+};
 
 // 结算按钮
 const gotoPayment = () => {
