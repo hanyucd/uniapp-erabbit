@@ -153,13 +153,13 @@
 					"style": {
 						"navigationBarTitleText": "支付结果"
 					}
+				},
+				{
+					"path": "order-list/order-list",
+					"style": {
+						"navigationBarTitleText": "订单列表"
+					}
 				}
-				// {
-				// 	"path": "list/list",
-				// 	"style": {
-				// 		"navigationBarTitleText": "订单列表"
-				// 	}
-				// }
 			]
 		}
 	],

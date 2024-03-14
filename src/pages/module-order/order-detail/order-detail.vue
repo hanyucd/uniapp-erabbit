@@ -22,7 +22,7 @@
           </view>
           <view class="button" @click="onOrderPay">去支付</view>
         </template>
-        
+
         <!-- 其他订单状态:展示再次购买按钮 -->
         <template v-else>
           <!-- 订单状态文字 -->
@@ -149,7 +149,7 @@
         <view class="tips">请选择取消订单的原因：</view>
         <view v-for="item in reasonList" :key="item" class="cell" @click="reason = item">
           <text class="text">{{ item }}</text>
-          <text class="icon" :class="{ checked: item === reason }" />
+          <text class="icon" :class="{ checked: item === reason }">{{ item === reason ? '✓' : '' }}</text>
         </view>
       </view>
       <view class="footer">
@@ -242,13 +242,21 @@ onLoad(() => {
 const getMemberOrderByIdData = async () => {
   const res = await $api.getMemberOrderByIdApi(query.id);
   order.value = res.result;
-  // if (
-  //   [OrderState.DaiShouHuo, OrderState.DaiPingJia, OrderState.YiWanCheng].includes(
-  //     order.value.orderState,
-  //   )
-  // ) {
-  //   getMemberOrderLogisticsByIdData();
-  // }
+  if (
+    [OrderState.DaiShouHuo, OrderState.DaiPingJia, OrderState.YiWanCheng].includes(
+      order.value.orderState,
+    )
+  ) {
+    getMemberOrderLogisticsByIdData();
+  }
+};
+
+/**
+ * 获取物流信息
+ */
+const getMemberOrderLogisticsByIdData = async () => {
+  const res = await $api.getMemberOrderLogisticsByIdAPIApi(query.id);
+  logisticList.value = res.result.list;
 };
 
 // 倒计时结束事件
@@ -257,14 +265,54 @@ const onTimeup = () => {
   order.value!.orderState = OrderState.YiQuXiao;
 };
 
-// 订单支付
-const onOrderPay = async () => {};
+/**
+ * 订单支付
+ */
+const onOrderPay = async () => {
+  if (import.meta.env.DEV) {
+    // 开发环境模拟支付
+    await $api.getPayMockApi({ orderId: query.id });
+  } else {
+    // #ifdef MP-WEIXIN
+    // 正式环境微信支付
+    const res = await $api.getPayWxPayMiniPayApi({ orderId: query.id });
+    await wx.requestPayment(res.result);
+    // #endif
+
+    // #ifdef H5 || APP-PLUS
+    // H5端 和 App 端未开通支付-模拟支付体验
+    await $api.getPayMockApi({ orderId: query.id });
+    // #endif
+  }
+
+  // 关闭当前页，再跳转支付结果页
+  uni.redirectTo({ url: `/pages/module-order/order-pay/order-pay?id=${query.id}` });
+};
 
 // 模拟发货
-const onOrderSend = async () => {};
+const onOrderSend = async () => {
+  if (isDev) {
+    await $api.getMemberOrderConsignmentByIdApi(query.id);
+    uni.showToast({ icon: 'success', title: '模拟发货完成' });
+    // 主动更新订单状态
+    order.value!.orderState = OrderState.DaiShouHuo;
+  }
+};
 
 // 确认收货
-const onOrderConfirm = async () => {};
+const onOrderConfirm = () => {
+  uni.showModal({
+    content: '为保障您的权益，请收到货并确认无误后，再确认收货',
+    confirmColor: '#27BA9B',
+    success: async (success) => {
+      if (success.confirm) {
+        const res = await $api.putMemberOrderReceiptByIdApi(query.id);
+        // 更新订单状态
+        order.value = res.result;
+      }
+    }
+  });
+};
 
 // 复制内容
 const onCopy = (id: string) => {
@@ -280,22 +328,21 @@ const onOrderDelete = () => {
     confirmColor: '#27BA9B',
     success: async (success) => {
       if (success.confirm) {
-        // await deleteMemberOrderAPI({ ids: [query.id] });
-        uni.redirectTo({ url: '/pagesOrder/list/list' });
+        await $api.deleteMemberOrderApi({ ids: [query.id] });
+        uni.redirectTo({ url: '/pages/module-order/order-list/order-list' });
       }
     },
   });
 };
-
 // 弹出层组件
 const popup = ref<UniHelper.UniPopupInstance>();
 
 // 取消订单
 const onOrderCancel = async () => {
   // 发送请求
-  // const res = await getMemberOrderCancelByIdAPI(query.id, { cancelReason: reason.value });
+  const res = await $api.getMemberOrderCancelByIdApi(query.id, { cancelReason: reason.value });
   // 更新订单信息
-  // order.value = res.result;
+  order.value = res.result;
   // 关闭弹窗
   popup.value?.close!();
   // 轻提示

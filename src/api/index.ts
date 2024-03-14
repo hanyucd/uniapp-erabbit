@@ -73,8 +73,22 @@ export default {
   getMemberOrderPreNowApi: (param: { skuId: string; count: string; addressId?: string }) => httpRequest<TypeOrder.OrderPreResult>(`/member/order/pre/now`, param),
   // 提交订单
   postMemberOrderApi: (param: TypeOrder.OrderCreateParams) => httpRequest<{ id: string }>(`/member/order`, param, 'post'),
+  // 删除订单
+  deleteMemberOrderApi: (param: { ids: string[] }) => httpRequest(`/member/order`, param, 'delete'),
+  // 取消订单
+  getMemberOrderCancelByIdApi: (id: string, param: { cancelReason: string }) => httpRequest(`/member/order/${id}/cancel`, param, 'put'),
   // 填写订单-再次购买
   getMemberOrderRepurchaseByIdApi: (id: string) => httpRequest<TypeOrder.OrderPreResult>(`/member/order/repurchase/${id}`),
   // 获取订单详情
   getMemberOrderByIdApi: (id: string) => httpRequest<TypeOrder.OrderResult>(`/member/order/${id}`),
+  // 获取微信支付参数
+  getPayWxPayMiniPayApi: (param: { orderId: string }) => httpRequest<WechatMiniprogram.RequestPaymentOption>(`/pay/wxPay/miniPay`, param),
+  // 模拟支付-内测版
+  getPayMockApi: (param: { orderId: string }) => httpRequest(`/pay/mock`, param),
+  // 模拟发货-内测版
+  getMemberOrderConsignmentByIdApi: (id: string) => httpRequest(`/member/order/consignment/${id}`),
+  // 确认收货
+  putMemberOrderReceiptByIdApi: (id: string) => httpRequest<TypeOrder.OrderResult>(`/member/order/${id}/receipt`, {}, 'put'),
+  // 获取订单物流
+  getMemberOrderLogisticsByIdAPIApi: (id: string) => httpRequest<TypeOrder.OrderLogisticResult>(`/member/order/${id}/logistics`),
 };
