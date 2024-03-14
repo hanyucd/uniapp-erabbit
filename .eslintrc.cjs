@@ -11,6 +11,8 @@ module.exports = {
     UniApp: true,
     UniHelper: true,
     getCurrentPages: true,
+    Page: true,
+    WechatMiniprogram: true,
   },
   // 指定如何解析语法
   parser: 'vue-eslint-parser',
