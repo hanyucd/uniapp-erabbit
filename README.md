@@ -4,12 +4,35 @@
 
 (次)：lint-staged（只对git缓存区的代码进行eslint代码规范检验） + pinia-plugin-persistedstate（数据持久化）
 
-# 参考
+### uniapp + ts 配置
 
-- 获取手机号登录
-- 封装 uni.request + uni.addInterceptor 请求拦截器
-- pinia-plugin-persistedstate uniap 中修改 storage 存储 方式
-- 微信小程序分包 + 预下载
+- @dcloudio/types **uni-app 内置 API 类型**
+- @uni-helper/uni-app-types **uni-app 内置组件的 TypeScript 类型定义文件**
+- miniprogram-api-typings **原生微信小程序类型 API 的 TypeScript 类型定义文件** 
+- @uni-helper/uni-ui-types **提供 uni-ui 组件 TypeScript 类型**
+- @uni-helper/uni-cloud-types **提供 uni-cloud 组件类型**
+- ...
+
+```js
+tsconfig.json
+
+"compilerOptions": {
+  ...
+  // 只有其中列出的模块才会自动加入编译
+  "types": [
+    "@dcloudio/types",
+    "@uni-helper/uni-app-types",
+    "miniprogram-api-typings",
+    "@uni-helper/uni-ui-types",
+  ]
+},
+```
+
+### 推荐
+- [uni-helper](https://github.com/uni-helper) 虽然是非官方组织，但这个第三方组织是 uni-app 生态类型声明文件做的非常好，更新频率也非常及时
+
+- UI库：[uv-ui](https://www.uvui.cn/)。uv-ui 可以通过 [ttou/uv-typings](https://www.npmjs.com/package/@ttou/uv-typings) 提供 ts 支持
+
 
 ### 封装 uni.request + uni.addInterceptor 请求拦截器
 ```js
@@ -143,3 +166,20 @@ export * from './modules/memberModule';
   }
 }
 ```
+
+### 成果展示
+
+<div  align="center">    
+  <!-- <img width="200" src="./display/screenshot_1.jpg" alt=""> -->
+  <img width="300" src="./display/screenshot_2.jpg" alt="">
+  <img width="300" src="./display/screenshot_3.jpg" alt="">
+  <img width="300" src="./display/screenshot_4.jpg" alt="">
+  <img width="300" src="./display/screenshot_5.jpg" alt="">
+  <img width="300" src="./display/screenshot_6.jpg" alt="">
+  <!-- <img width="300" src="./display/screenshot_7.jpg" alt=""> -->
+  <!-- <img width="300" src="./display/screenshot_8.jpg" alt=""> -->
+  <img width="300" src="./display/screenshot_9.jpg" alt="">
+  <img width="300" src="./display/screenshot_10.jpg" alt="">
+  <img width="300" src="./display/screenshot_11.jpg" alt="">
+  <!-- <img width="200" src="./display/screenshot_6.jpg" alt=""> -->
+</div>
