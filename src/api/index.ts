@@ -77,6 +77,8 @@ export default {
   deleteMemberOrderApi: (param: { ids: string[] }) => httpRequest(`/member/order`, param, 'delete'),
   // 取消订单
   getMemberOrderCancelByIdApi: (id: string, param: { cancelReason: string }) => httpRequest(`/member/order/${id}/cancel`, param, 'put'),
+  // 获取订单列表
+  getMemberOrderApi: (param: TypeOrder.OrderListParams) => httpRequest<TypeOrder.OrderListResult>(`/member/order`, param),
   // 填写订单-再次购买
   getMemberOrderRepurchaseByIdApi: (id: string) => httpRequest<TypeOrder.OrderPreResult>(`/member/order/repurchase/${id}`),
   // 获取订单详情
