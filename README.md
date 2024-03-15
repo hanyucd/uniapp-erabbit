@@ -8,9 +8,9 @@
 
 - @dcloudio/types **uni-app 内置 API 类型**
 - @uni-helper/uni-app-types **uni-app 内置组件的 TypeScript 类型定义文件**
-- miniprogram-api-typings **原生微信小程序类型 API 的 TypeScript 类型定义文件** 
 - @uni-helper/uni-ui-types **提供 uni-ui 组件 TypeScript 类型**
 - @uni-helper/uni-cloud-types **提供 uni-cloud 组件类型**
+- miniprogram-api-typings **原生微信小程序类型 API 的 TypeScript 类型定义文件** 
 - ...
 
 ```js
