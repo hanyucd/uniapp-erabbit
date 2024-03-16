@@ -22,8 +22,8 @@ tsconfig.json
   "types": [
     "@dcloudio/types",
     "@uni-helper/uni-app-types",
-    "miniprogram-api-typings",
     "@uni-helper/uni-ui-types",
+    "miniprogram-api-typings",
   ]
 },
 ```
